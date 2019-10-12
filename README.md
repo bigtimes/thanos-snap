@@ -1,5 +1,5 @@
 # Thanos Bot
-Ever wanted to balance a voice channel, use this bot.
+Ever wanted to balance a voice channel? Just use Thanos Bot.
 
 ## Dependencies
 * NodeJS
