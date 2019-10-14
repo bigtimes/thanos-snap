@@ -9,7 +9,6 @@ client.on('ready', () => {
 
 /* Basically handles parsing */
 client.on('message', message => {
-
     /* Make sure it's a command */
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
@@ -65,7 +64,5 @@ client.on('message', message => {
 	}
     }
 });
-
-
 
 client.login(token);
