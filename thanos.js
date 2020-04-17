@@ -7,9 +7,9 @@ client.on('ready', () => {
     console.log('Ready...');
 });
 
-/* Basically handles parsing */
+// Handles parsing
 client.on('message', message => {
-    /* Make sure it's a command */
+	// Command handler
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     const args    = message.content.slice(prefix.length).split(' ');
