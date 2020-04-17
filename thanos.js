@@ -2,7 +2,7 @@ const {prefix, token} = require('./config.json');
 const Discord = require('discord.js');
 const client  = new Discord.Client();
 
-/* Start her up */
+// Start the bot
 client.on('ready', () => {
     console.log('Ready...');
 });
