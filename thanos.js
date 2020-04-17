@@ -2,12 +2,14 @@ const {prefix, token} = require('./config.json');
 const Discord = require('discord.js');
 const client  = new Discord.Client();
 
+// For snapping
 function snap(message, channel) {
 	try {
 		if (channel == null)
-			const VCMembers 	  = message.member.voiceChannel.members;
+			const VCMembers = message.member.voiceChannel.members;
 		else
-			const VCmembers       = channel.members;
+			const VCmembers = channel.members;
+
 		const sizeBalanced    = Math.floor(Array.from(VCMembers).length / 2);
 		const balancedMembers = VCMembers.random(sizeBalanced);
 
@@ -42,17 +44,17 @@ client.on('message', message => {
 	switch(args) {
 		case "snap": 
 			if (!args.length)
-					snap(message); // Snapping...
+				snap(message); // Snapping...
 			else {
-	    		let channel;
-	    		const channelName = args.join(" ");
-	    		if (!guild.available) return;
+				let channel;
+				const channelName = args.join(" ");
+				if (!guild.available) return;
 
-	    		const guildArrays = guild.channels.array();
-	    		for (i in guildArrays) {
+				const guildArrays = guild.channels.array();
+				for (i in guildArrays) {
 					if (guildArrays[i].name === channelName) {
-		  	  			channel = guildArrays[i];
-		  	  			break;
+						channel = guildArrays[i];
+						break;
 					}
 	    		}
 
