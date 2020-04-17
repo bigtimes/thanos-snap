@@ -2,67 +2,64 @@ const {prefix, token} = require('./config.json');
 const Discord = require('discord.js');
 const client  = new Discord.Client();
 
+function snap(message, channel) {
+	try {
+		if (channel == null)
+			const VCMembers 	  = message.member.voiceChannel.members;
+		else
+			const VCmembers       = channel.members;
+		const sizeBalanced    = Math.floor(Array.from(VCMembers).length / 2);
+		const balancedMembers = VCMembers.random(sizeBalanced);
+
+		message.channel.send("Equally balanced, as all things should be.");
+
+		for (let i = 0; i < sizeBalanced; ++i)
+			balanceMembers[i].setVoiceChannel(null);
+	} catch(e) {
+		// Not enough members
+		if (e instanceof RangeError)
+			console.log("Too few members in voice channel.");
+		// No one is in the channel
+		if (e instanceof TypeError)
+		console.log("Property 'members' undefined, perhaps no one is in channel.");
+	}
+}
+
 // Start the bot
 client.on('ready', () => {
     console.log('Ready...');
 });
 
-// Handles parsing
+// Handles parsing of commands
 client.on('message', message => {
-	// Command handler
+	// If prefix not found, or messager is a bot
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-    const args    = message.content.slice(prefix.length).split(' ');
-    const command = args.shift().toLowerCase();
-    const guild   = message.guild;
+    const args    = message.content.slice(prefix.length).split(' '); // Get the pure argument
+    const command = args.shift().toLowerCase(); // Easier parsing, this also changes args
+    const guild   = message.guild; // Get the guild of the message
 
-    if (command === 'snap') {
-	if (!args.length) {
-	    try {
-		const VCmembers       = message.member.voiceChannel.members;
-		const sizeBalanced    = Math.floor(Array.from(VCmembers).length / 2);
-		const balancedMembers = VCmembers.random(sizeBalanced);
+	switch(args) {
+		case "snap": 
+			if (!args.length)
+					snap(message); // Snapping...
+			else {
+	    		let channel;
+	    		const channelName = args.join(" ");
+	    		if (!guild.available) return;
 
-		message.channel.send("Equally balanced, as all things should be.");
-		for (var i = 0; i < sizeBalanced; ++i)
-		    balancedMembers[i].setVoiceChannel(null);
-	    }
-	    catch (e) {
-		if (e instanceof RangeError)
-		    console.log("Too few members in voice channel.");
-		if (e instanceof TypeError)
-		    console.log("Property 'members' undefined, perhaps no one is in channel.");
-	    }
-	} else {
-	    let channel;
-	    const channelName = args.join(" ");
-	    if (!guild.available) return;
+	    		const guildArrays = guild.channels.array();
+	    		for (i in guildArrays) {
+					if (guildArrays[i].name === channelName) {
+		  	  			channel = guildArrays[i];
+		  	  			break;
+					}
+	    		}
 
-	    const guildArrays = guild.channels.array();
-	    for (i in guildArrays) {
-		if (guildArrays[i].name === channelName) {
-		    channel = guildArrays[i];
-		    break;
-		}
-	    }
-
-	    try {
-		const VCmembers       = channel.members;
-		const sizeBalanced    = Math.floor(Array.from(VCmembers).length / 2);
-		const balancedMembers = VCmembers.random(sizeBalanced);
-
-		message.channel.send("Equally balanced, as all things should be.");
-		for (var i = 0; i < sizeBalanced; ++i)
-		    balancedMembers[i].setVoiceChannel(null);
-	    }
-	    catch (e) {
-		if (e instanceof RangeError)
-		    console.log("Too few members in voice channel.");
-		if (e instanceof TypeError)
-		    console.log("Property 'members' undefined, perhaps no one is in channel.");
-	    }
+				// Snapping...
+				snap(message, channel);
+	    	}
 	}
-    }
 });
 
 client.login(token);
