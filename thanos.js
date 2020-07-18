@@ -14,20 +14,19 @@ function snap(message, channel = null)
 	else
 	    VCmembers = channel.members;
 		
-	const sizeBalanced    = Math.floor(Array.from(VCMembers).length / 2);
+	const sizeBalanced    = Math.floor(VCMembers.size / 2);
 	const balancedMembers = VCMembers.random(sizeBalanced);
 
 	let VoiceStates = new Array();
-	for (let gm of balancedMembers.values()) {
+	for (let gm of balancedMembers.values())
 	    VoiceStates.push(gm.voice);
-	}
 
 	message.channel.send("Equally balanced, as all things should be.");
 
 	console.log(VoiceStates);
-	for (let i = 0; i < sizeBalanced; ++i) {
+	for (let i = 0; i < sizeBalanced; ++i)
 	    VoiceStates[i].setChannel(null);
-	}
+
     } catch(e) 
     {
         // Not enough members
@@ -60,21 +59,25 @@ client.on('message', message =>
     switch(args[0]) {
     case "snap": 
 	if (args.length < 2)
-	   snap(message); // Snapping...
+	    // Snapping...
+	   snap(message); 
 	else {
-	    let channel = args[1];
+	    args.shift();
+	    let channelQuery = args.join(" ");
 	    if (!guild.available) return;
 	
 	    const channels = guild.channels.cache;
-	    for (let i of guildArrays) {
-		if (guildArrays[i].name === channelName) {
-		    channel = guildArrays[i];
-			break;
+	    for (let chan of channels) {
+		console.log(chan.name);
+		if (chan.name === channelQuery) {
+		    channelQuery = chan;
+		    break;
 		}
-    	    }
+	    }
 	
 	    // Snapping...
-	    snap(message, channel);
+	    console.log(channelQuery);
+	    snap(message, channelQuery);
 	}
     }
 });
